@@ -1,0 +1,247 @@
+{
+  "cases": [
+    {
+      "case_id": "supported_exec_summary",
+      "packet": {
+        "section_id": "section-exec",
+        "heading": "Executive Summary",
+        "order": 1,
+        "section_text": "Northwind FY2025 revenue grew 12 percent year over year and operating margin improved to 18 percent. Management attributes the gains to enterprise renewals and tighter operating discipline.",
+        "word_count": 25,
+        "is_oversized": false,
+        "subchunks": [],
+        "checked_claims": [
+          {
+            "sentence_id": "sentence-1",
+            "claim_id": "claim-revenue",
+            "approved_claim_text": "Northwind FY2025 revenue grew 12 percent year over year.",
+            "original_sentence": "Northwind FY2025 revenue grew 12 percent year over year.[1]",
+            "section_id": "section-exec",
+            "paragraph_id": "paragraph-1",
+            "citation_ids": [
+              "citation-1"
+            ],
+            "reference_id": "reference-1",
+            "evidence_verdict": "supported_by_cited_source",
+            "evidence_reason": "The cited results section states revenue grew 12 percent year over year.",
+            "recommended_action": "Keep the metric and preserve the cited basis.",
+            "linked_passage_ids": [
+              "passage-1"
+            ],
+            "source_fetch_status": "fetched",
+            "source_extraction_status": "extracted",
+            "warnings": []
+          },
+          {
+            "sentence_id": "sentence-2",
+            "claim_id": "claim-margin",
+            "approved_claim_text": "Northwind operating margin improved to 18 percent in FY2025.",
+            "original_sentence": "Northwind operating margin improved to 18 percent in FY2025.[2]",
+            "section_id": "section-exec",
+            "paragraph_id": "paragraph-1",
+            "citation_ids": [
+              "citation-2"
+            ],
+            "reference_id": "reference-2",
+            "evidence_verdict": "supported_by_cited_source",
+            "evidence_reason": "The cited margin table reports operating margin at 18 percent for FY2025.",
+            "recommended_action": "Keep the metric and preserve the cited basis.",
+            "linked_passage_ids": [
+              "passage-2"
+            ],
+            "source_fetch_status": "fetched",
+            "source_extraction_status": "extracted",
+            "warnings": []
+          }
+        ],
+        "gate_context": {
+          "global_gate_status": "continue",
+          "global_gate_summary": "Checked claims are supported by cited sources.",
+          "global_stop_recommended": false,
+          "section_has_contradiction": false,
+          "section_has_warning": false
+        },
+        "coverage_summary": {
+          "checked_claim_count": 2,
+          "contradicted_count": 0,
+          "unsupported_count": 0,
+          "unverified_count": 0,
+          "deselected_count": 0
+        },
+        "unresolved_risks": [],
+        "visual_context": []
+      },
+      "expectations": {
+        "needs_human_attention": false,
+        "summary_concept_groups": [
+          [
+            "revenue"
+          ],
+          [
+            "12 percent",
+            "12%"
+          ],
+          [
+            "margin"
+          ],
+          [
+            "18 percent",
+            "18%"
+          ]
+        ],
+        "strength_concept_groups": [
+          [
+            "revenue"
+          ],
+          [
+            "margin"
+          ]
+        ],
+        "max_unresolved_risk_count": 0
+      }
+    },
+    {
+      "case_id": "contradicted_outlook_section",
+      "packet": {
+        "section_id": "section-outlook",
+        "heading": "Outlook",
+        "order": 2,
+        "section_text": "The company says operating margin will expand to 22 percent in FY2026 and that customer retention already reached 95 percent. The draft presents both points as established proof of durable momentum.",
+        "word_count": 31,
+        "is_oversized": true,
+        "subchunks": [
+          {
+            "subchunk_id": "section-outlook-subchunk-1",
+            "section_id": "section-outlook",
+            "order": 1,
+            "content": "The company says operating margin will expand to 22 percent in FY2026.",
+            "word_count": 12
+          },
+          {
+            "subchunk_id": "section-outlook-subchunk-2",
+            "section_id": "section-outlook",
+            "order": 2,
+            "content": "The draft also says customer retention already reached 95 percent.",
+            "word_count": 11
+          },
+          {
+            "subchunk_id": "section-outlook-subchunk-3",
+            "section_id": "section-outlook",
+            "order": 3,
+            "content": "Both points are presented as established proof of durable momentum.",
+            "word_count": 10
+          }
+        ],
+        "checked_claims": [
+          {
+            "sentence_id": "sentence-3",
+            "claim_id": "claim-margin-outlook",
+            "approved_claim_text": "Operating margin will expand to 22 percent in FY2026.",
+            "original_sentence": "Operating margin will expand to 22 percent in FY2026.[3]",
+            "section_id": "section-outlook",
+            "paragraph_id": "paragraph-4",
+            "citation_ids": [
+              "citation-3"
+            ],
+            "reference_id": "reference-3",
+            "evidence_verdict": "contradicted",
+            "evidence_reason": "The cited source says management expects margin to remain around 16 percent, not 22 percent.",
+            "recommended_action": "Rewrite the claim to match the cited outlook or remove it.",
+            "linked_passage_ids": [
+              "passage-3"
+            ],
+            "source_fetch_status": "fetched",
+            "source_extraction_status": "extracted",
+            "warnings": []
+          },
+          {
+            "sentence_id": "sentence-4",
+            "claim_id": "claim-retention",
+            "approved_claim_text": "Customer retention already reached 95 percent.",
+            "original_sentence": "Customer retention already reached 95 percent.[4]",
+            "section_id": "section-outlook",
+            "paragraph_id": "paragraph-4",
+            "citation_ids": [
+              "citation-4"
+            ],
+            "reference_id": "reference-4",
+            "evidence_verdict": "unverified",
+            "evidence_reason": "The cited excerpt did not include the KPI table, so retention could not be verified.",
+            "recommended_action": "Do not present the figure as confirmed until the cited source is available.",
+            "linked_passage_ids": [
+              "passage-4"
+            ],
+            "source_fetch_status": "fetched",
+            "source_extraction_status": "extracted",
+            "warnings": [
+              "retrieval coverage is incomplete"
+            ]
+          }
+        ],
+        "gate_context": {
+          "global_gate_status": "stop_and_fix",
+          "global_gate_summary": "Stop and fix the contradicted claim before later analysis.",
+          "global_stop_recommended": true,
+          "section_has_contradiction": true,
+          "section_has_warning": true
+        },
+        "coverage_summary": {
+          "checked_claim_count": 2,
+          "contradicted_count": 1,
+          "unsupported_count": 0,
+          "unverified_count": 1,
+          "deselected_count": 0
+        },
+        "unresolved_risks": [
+          "One or more checked claims in this section are contradicted by the cited source.",
+          "One or more checked claims in this section remain unverified because source access or evidence coverage was insufficient.",
+          "The global gate recommends stopping to fix evidence issues before later analysis."
+        ],
+        "visual_context": []
+      },
+      "expectations": {
+        "needs_human_attention": true,
+        "summary_concept_groups": [
+          [
+            "margin"
+          ],
+          [
+            "retention"
+          ]
+        ],
+        "risk_concept_groups": [
+          [
+            "contradicted",
+            "contradiction",
+            "conflict"
+          ],
+          [
+            "unverified",
+            "not verified",
+            "unable to verify"
+          ],
+          [
+            "stop",
+            "fix",
+            "halt"
+          ]
+        ],
+        "revision_concept_groups": [
+          [
+            "revise",
+            "remove",
+            "correct",
+            "qualify"
+          ],
+          [
+            "cite",
+            "source",
+            "evidence",
+            "support"
+          ]
+        ],
+        "min_unresolved_risk_count": 2
+      }
+    }
+  ]
+}

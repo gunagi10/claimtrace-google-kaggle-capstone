@@ -1,0 +1,241 @@
+{
+  "cases": [
+    {
+      "case_id": "coherent_supported_report",
+      "packet": {
+        "review_id": "batch-coherent",
+        "global_gate": {
+          "status": "continue",
+          "summary": "No contradictions, unsupported findings, or unverified findings were returned for the checked claims.",
+          "checked_claim_count": 3,
+          "pending_claim_count": 0,
+          "contradiction_count": 0,
+          "unsupported_count": 0,
+          "unverified_count": 0,
+          "contradiction_sentence_ids": [],
+          "warning_sentence_ids": [],
+          "user_override_allowed": true,
+          "user_override_applied": false
+        },
+        "report_coverage": {
+          "selected_claim_count": 3,
+          "completed_claim_count": 3,
+          "unresolved_claim_count": 0,
+          "deselected_claim_count": 0,
+          "contradicted_claim_count": 0,
+          "unsupported_claim_count": 0,
+          "unverified_claim_count": 0,
+          "eligible_section_count": 2,
+          "completed_section_count": 2,
+          "human_attention_section_count": 0
+        },
+        "section_digests": [
+          {
+            "section_id": "section-1",
+            "heading": "Executive Summary",
+            "order": 1,
+            "checked_claim_count": 2,
+            "contradicted_count": 0,
+            "unsupported_count": 0,
+            "unverified_count": 0,
+            "deselected_count": 0,
+            "section_has_contradiction": false,
+            "section_has_warning": false,
+            "needs_human_attention": false,
+            "summary": "The section says revenue grew 12 percent and margin improved to 18 percent in FY2025.",
+            "factual_strengths": [
+              "Revenue growth is supported by cited evidence.",
+              "Margin improvement is supported by cited evidence."
+            ],
+            "factual_gaps": [],
+            "insight_issues": [],
+            "unresolved_risks": [],
+            "recommended_revisions": []
+          },
+          {
+            "section_id": "section-2",
+            "heading": "Outlook",
+            "order": 2,
+            "checked_claim_count": 1,
+            "contradicted_count": 0,
+            "unsupported_count": 0,
+            "unverified_count": 0,
+            "deselected_count": 0,
+            "section_has_contradiction": false,
+            "section_has_warning": false,
+            "needs_human_attention": false,
+            "summary": "The section presents a cautious FY2026 outlook that stays aligned with the validated performance story.",
+            "factual_strengths": [
+              "The outlook wording stays consistent with the supported performance narrative."
+            ],
+            "factual_gaps": [],
+            "insight_issues": [],
+            "unresolved_risks": [],
+            "recommended_revisions": []
+          }
+        ],
+        "unresolved_report_risks": []
+      },
+      "expectations": {
+        "needs_human_attention": false,
+        "summary_concept_groups": [
+          [
+            "revenue"
+          ],
+          [
+            "margin"
+          ],
+          [
+            "outlook",
+            "fy2026"
+          ]
+        ],
+        "strength_concept_groups": [
+          [
+            "consistent",
+            "consistency",
+            "aligned",
+            "coherent"
+          ]
+        ],
+        "max_unresolved_risk_count": 0
+      }
+    },
+    {
+      "case_id": "warning_pattern_report",
+      "packet": {
+        "review_id": "batch-warning",
+        "global_gate": {
+          "status": "continue_with_warnings",
+          "summary": "No contradictions were found in checked claims, but warnings remain: 1 unsupported and 1 unverified.",
+          "checked_claim_count": 4,
+          "pending_claim_count": 0,
+          "contradiction_count": 0,
+          "unsupported_count": 1,
+          "unverified_count": 1,
+          "contradiction_sentence_ids": [],
+          "warning_sentence_ids": [
+            "sentence-4",
+            "sentence-5"
+          ],
+          "user_override_allowed": true,
+          "user_override_applied": false
+        },
+        "report_coverage": {
+          "selected_claim_count": 4,
+          "completed_claim_count": 4,
+          "unresolved_claim_count": 0,
+          "deselected_claim_count": 1,
+          "contradicted_claim_count": 0,
+          "unsupported_claim_count": 1,
+          "unverified_claim_count": 1,
+          "eligible_section_count": 2,
+          "completed_section_count": 2,
+          "human_attention_section_count": 1
+        },
+        "section_digests": [
+          {
+            "section_id": "section-1",
+            "heading": "Executive Summary",
+            "order": 1,
+            "checked_claim_count": 2,
+            "contradicted_count": 0,
+            "unsupported_count": 1,
+            "unverified_count": 0,
+            "deselected_count": 0,
+            "section_has_contradiction": false,
+            "section_has_warning": true,
+            "needs_human_attention": true,
+            "summary": "The section makes a strong topline case but still presents one unsupported KPI too confidently.",
+            "factual_strengths": [
+              "The main revenue result is supported."
+            ],
+            "factual_gaps": [
+              "One KPI is asserted without support from the cited source."
+            ],
+            "insight_issues": [
+              "The section overstates certainty on a warning-level point."
+            ],
+            "unresolved_risks": [
+              "One KPI remains unsupported by cited evidence."
+            ],
+            "recommended_revisions": [
+              "Qualify or remove the unsupported KPI statement."
+            ]
+          },
+          {
+            "section_id": "section-2",
+            "heading": "Customer Strategy",
+            "order": 2,
+            "checked_claim_count": 2,
+            "contradicted_count": 0,
+            "unsupported_count": 0,
+            "unverified_count": 1,
+            "deselected_count": 1,
+            "section_has_contradiction": false,
+            "section_has_warning": true,
+            "needs_human_attention": false,
+            "summary": "The section links future strategy to a retention figure that could not be verified from the available source coverage.",
+            "factual_strengths": [
+              "The strategic direction is understandable."
+            ],
+            "factual_gaps": [
+              "The retention KPI could not be verified."
+            ],
+            "insight_issues": [
+              "The section relies on a shaky proof point to support a broader recommendation."
+            ],
+            "unresolved_risks": [
+              "One KPI remains unverified because source coverage was incomplete."
+            ],
+            "recommended_revisions": [
+              "Separate the strategic recommendation from the unverified KPI."
+            ]
+          }
+        ],
+        "unresolved_report_risks": [
+          "1 checked claim remains unsupported by cited sources.",
+          "1 checked claim remains unverified because source access or evidence coverage was insufficient.",
+          "1 section still requires human attention after section analysis."
+        ]
+      },
+      "expectations": {
+        "needs_human_attention": true,
+        "summary_concept_groups": [
+          [
+            "unsupported",
+            "unverified",
+            "warning"
+          ]
+        ],
+        "issue_concept_groups": [
+          [
+            "unsupported",
+            "unverified",
+            "shaky",
+            "uncertain"
+          ]
+        ],
+        "pattern_concept_groups": [
+          [
+            "pattern",
+            "repeated",
+            "across sections",
+            "more than one section",
+            "consistently",
+            "entire argument"
+          ]
+        ],
+        "action_concept_groups": [
+          [
+            "qualify",
+            "remove",
+            "separate",
+            "revise"
+          ]
+        ],
+        "min_unresolved_risk_count": 2
+      }
+    }
+  ]
+}

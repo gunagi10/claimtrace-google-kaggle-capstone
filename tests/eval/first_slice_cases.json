@@ -1,0 +1,52 @@
+{
+  "cases": [
+    {
+      "case_id": "awaiting_model_config_uploaded_html",
+      "description": "Uploaded HTML reaches the judge seam and stops cleanly when GOOGLE_API_KEY is still a placeholder.",
+      "mode": "placeholder_config",
+      "source_mode": "upload_html_supported",
+      "expected_status": "awaiting_model_config"
+    },
+    {
+      "case_id": "ocr_required_uploaded_pdf",
+      "description": "Uploaded image-only PDF fails gracefully before the judge step.",
+      "mode": "deterministic_only",
+      "source_mode": "upload_pdf_ocr_required",
+      "expected_status": "prejudge_unverified",
+      "expected_verdict": "unverified",
+      "expected_warnings": ["ocr_required"]
+    },
+    {
+      "case_id": "blocked_fetch_without_upload",
+      "description": "Blocked or private exact-source fetch becomes explicit Unverified instead of a transport failure.",
+      "mode": "deterministic_only",
+      "source_mode": "fetch_blocked",
+      "expected_status": "prejudge_unverified",
+      "expected_verdict": "unverified",
+      "expected_warnings": ["source_fetch_failed"]
+    },
+    {
+      "case_id": "awaiting_model_config_fetch_html",
+      "description": "Exact-source fetch can succeed without an upload and still stop safely before live judgment when no key is configured.",
+      "mode": "placeholder_config",
+      "source_mode": "fetch_html_supported",
+      "expected_status": "awaiting_model_config"
+    },
+    {
+      "case_id": "live_supported_uploaded_html",
+      "description": "Live Gemini judge should classify directly supporting HTML as supported.",
+      "mode": "live_judge",
+      "source_mode": "upload_html_supported",
+      "expected_status": "completed",
+      "expected_verdict": "supported_by_cited_source"
+    },
+    {
+      "case_id": "live_unsupported_uploaded_html",
+      "description": "Live Gemini judge should classify relevant but non-supporting HTML as unsupported or contradicted, never supported.",
+      "mode": "live_judge",
+      "source_mode": "upload_html_unsupported",
+      "expected_status": "completed",
+      "forbid_verdicts": ["supported_by_cited_source"]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "supported_sources_question",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "What sources are supported in the first review slice?"}]
+      }
+    },
+    {
+      "eval_case_id": "ocr_required_pdf_question",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "What happens if the cited PDF is image-only and has no usable text layer?"}]
+      }
+    }
+  ]
+}

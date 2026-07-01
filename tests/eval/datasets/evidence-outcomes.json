@@ -1,0 +1,109 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "supported_exact_metric",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Claim:\n- claim_id: claim-supported\n- atomic_claim: Northwind's FY2025 revenue grew 12 percent year over year.\n- original_sentence: Northwind's FY2025 revenue grew 12 percent year over year.[1]\n- section_id: section-results\n- paragraph_id: paragraph-1\n- citation_ids: ['citation-1']\n\nSource:\n- source_id: source-1\n- reference_id: reference-1\n- canonical_url: https://example.com/fy2025\n- source_fetch_status: fetched\n- source_extraction_status: extracted\n- source_warnings: []\n\nCandidate passages:\n- passage-1 (heading=FY2025 Results, span=block-1): Northwind's FY2025 revenue grew 12 percent year over year, from $100 million to $112 million."
+          }
+        ]
+      },
+      "reference": {
+        "response": {
+          "role": "model",
+          "parts": [
+            {
+              "text": "{\"expected_verdict\":\"supported_by_cited_source\",\"high_impact\":true}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "eval_case_id": "contradicted_margin_direction",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Claim:\n- claim_id: claim-contradicted\n- atomic_claim: Northwind's operating margin increased to 18 percent in FY2025.\n- original_sentence: Northwind's operating margin increased to 18 percent in FY2025.[1]\n- section_id: section-results\n- paragraph_id: paragraph-2\n- citation_ids: ['citation-1']\n\nSource:\n- source_id: source-1\n- reference_id: reference-1\n- canonical_url: https://example.com/fy2025\n- source_fetch_status: fetched\n- source_extraction_status: extracted\n- source_warnings: []\n\nCandidate passages:\n- passage-1 (heading=Margins, span=block-8): Operating margin decreased to 14 percent in FY2025 from 18 percent in FY2024 because of higher input costs."
+          }
+        ]
+      },
+      "reference": {
+        "response": {
+          "role": "model",
+          "parts": [
+            {
+              "text": "{\"expected_verdict\":\"contradicted\",\"high_impact\":true}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "eval_case_id": "partially_supported_regional_growth",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Claim:\n- claim_id: claim-mixed\n- atomic_claim: Northwind delivered broad-based 20 percent revenue growth in FY2025.\n- original_sentence: Northwind delivered broad-based 20 percent revenue growth in FY2025.[1]\n- section_id: section-results\n- paragraph_id: paragraph-3\n- citation_ids: ['citation-1']\n\nSource:\n- source_id: source-1\n- reference_id: reference-1\n- canonical_url: https://example.com/fy2025\n- source_fetch_status: fetched\n- source_extraction_status: extracted\n- source_warnings: []\n\nCandidate passages:\n- passage-1 (heading=Regional Results, span=block-12): Total FY2025 revenue grew 20 percent, led by 28 percent growth in North America.\n- passage-2 (heading=Regional Results, span=block-13): Europe revenue declined 4 percent and Asia-Pacific revenue grew 2 percent in FY2025."
+          }
+        ]
+      },
+      "reference": {
+        "response": {
+          "role": "model",
+          "parts": [
+            {
+              "text": "{\"expected_verdict\":\"partially_supported\",\"high_impact\":true,\"reason_concept_groups\":[[\"20 percent\",\"20%\"],[\"broad-based\",\"broad based\",\"europe\",\"declined\"]]}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "eval_case_id": "unsupported_unreported_kpi",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Claim:\n- claim_id: claim-unsupported\n- atomic_claim: Northwind's customer retention rate reached 95 percent in FY2025.\n- original_sentence: Northwind's customer retention rate reached 95 percent in FY2025.[1]\n- section_id: section-customers\n- paragraph_id: paragraph-4\n- citation_ids: ['citation-1']\n\nSource:\n- source_id: source-1\n- reference_id: reference-1\n- canonical_url: https://example.com/fy2025\n- source_fetch_status: fetched\n- source_extraction_status: extracted\n- source_warnings: []\n\nCandidate passages:\n- passage-1 (heading=Complete Audited KPI Table, span=block-20): This table is the complete list of FY2025 customer KPIs. It reports customer satisfaction at 92 percent and median response time at 3.4 hours. Customer retention was not calculated or reported for FY2025."
+          }
+        ]
+      },
+      "reference": {
+        "response": {
+          "role": "model",
+          "parts": [
+            {
+              "text": "{\"expected_verdict\":\"unsupported\",\"high_impact\":true}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "eval_case_id": "unverified_missing_metric",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+          "text": "Claim:\n- claim_id: claim-unverified\n- atomic_claim: Northwind's customer retention rate reached 95 percent in FY2025.\n- original_sentence: Northwind's customer retention rate reached 95 percent in FY2025.[1]\n- section_id: section-customers\n- paragraph_id: paragraph-5\n- citation_ids: ['citation-1']\n\nSource:\n- source_id: source-1\n- reference_id: reference-1\n- canonical_url: https://example.com/fy2025\n- source_fetch_status: fetched\n- source_extraction_status: extracted\n- source_warnings: [\"retrieval coverage is incomplete\"]\n\nCandidate passages:\n- passage-1 (heading=Customer Survey, span=block-21): The available excerpt says respondents valued faster support and improved product reliability, but the KPI table was not retrieved."
+          }
+        ]
+      },
+      "reference": {
+        "response": {
+          "role": "model",
+          "parts": [
+            {
+              "text": "{\"expected_verdict\":\"unverified\",\"high_impact\":true}"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
