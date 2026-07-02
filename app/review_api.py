@@ -1,3 +1,11 @@
+"""Application service layer for the local ClaimTrace review workflow.
+
+FastAPI routes call into this module for the real work: DOCX parsing, source
+resolution, deterministic retrieval, Gemini judgment, batch source reuse, section
+analysis, and final coherence. Keeping that orchestration here makes the browser
+page thin and leaves the review pipeline testable without UI automation.
+"""
+
 from __future__ import annotations
 
 import asyncio
@@ -255,6 +263,8 @@ async def run_batch_claim_review(
     review_pairs_json: str,
     local_context: str,
 ) -> RunBatchReviewResponse:
+    """Run selected claims while fetching each unique cited source once."""
+
     parsed = await _parse_docx_or_400(docx_file)
     selections = _parse_batch_review_selections(review_pairs_json)
 
@@ -483,6 +493,12 @@ async def _run_source_groups_with_bounded_concurrency(
     source_groups: list[list[_PreparedClaim]],
     local_context: str,
 ) -> _BatchConcurrencyOutcome:
+    """Run one worker per unique source, capped to protect the local app.
+
+    Claims that share a source stay sequential inside the worker so source
+    extraction is reused, while unrelated sources can overlap.
+    """
+
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_SOURCE_WORKERS)
     started_at = perf_counter()
     active_workers = 0
@@ -546,6 +562,8 @@ async def _run_single_source_group(
     source_group: list[_PreparedClaim],
     local_context: str,
 ) -> dict[tuple[str, str], RunReviewResponse]:
+    """Fetch/extract one source, then review each linked claim independently."""
+
     reference = source_group[0].reference
     source_id = f"source-{reference.reference_id}"
     resolved_source = await _resolve_source_payload(
@@ -569,6 +587,8 @@ async def _run_single_source_group(
 
 
 def _store_batch_context(review_id: str, context: _BatchReviewContext) -> None:
+    """Keep only a small in-memory shelf of active local reviews."""
+
     _ACTIVE_BATCH_REVIEWS[review_id] = context
     while len(_ACTIVE_BATCH_REVIEWS) > MAX_ACTIVE_BATCH_REVIEWS:
         oldest_review_id = next(iter(_ACTIVE_BATCH_REVIEWS))

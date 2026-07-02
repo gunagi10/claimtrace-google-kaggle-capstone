@@ -41,7 +41,7 @@ app: FastAPI = get_fast_api_app(
     otel_to_cloud=False,
 )
 app.title = settings.app_name
-app.description = "Local shell for the Business Report Verifier capstone"
+app.description = "Local shell for the ClaimTrace capstone"
 
 
 @app.get("/local/review", response_class=HTMLResponse)

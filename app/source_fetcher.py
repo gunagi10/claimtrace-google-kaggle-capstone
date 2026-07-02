@@ -1,3 +1,10 @@
+"""Safe exact-source fetching for cited HTML and text-layer PDFs.
+
+ClaimTrace deliberately fetches only the URL named by the bibliography entry.
+This module owns the network safety boundary: public URL validation, bounded
+downloads, redirect limits, and optional isolated browser rendering.
+"""
+
 from __future__ import annotations
 
 import ipaddress
@@ -41,6 +48,8 @@ class RenderedPage:
 
 
 def fetch_exact_source(reference: ReferenceEntry, source_id: str) -> SourceFetchOutcome:
+    """Fetch the cited URL without searching for replacement evidence."""
+
     canonical_url = (reference.canonical_url or "").strip()
     if not canonical_url:
         return SourceFetchOutcome(
@@ -187,6 +196,13 @@ def fetch_rendered_exact_source(
     *,
     renderer: Callable[[str], RenderedPage] | None = None,
 ) -> SourceFetchOutcome:
+    """Retry a public HTML source through an isolated browser-style renderer.
+
+    This is a recovery path for pages that block plain HTTP or need light
+    rendering. It still respects the exact-source rule and keeps the renderer
+    injectable so tests do not need to launch a real browser.
+    """
+
     canonical_url = (reference.canonical_url or "").strip()
     try:
         validated_url = _validate_public_url(canonical_url)
@@ -356,6 +372,8 @@ def _build_failed_source_document(
 
 
 def _validate_public_url(url: str) -> str:
+    """Resolve and reject URLs that point at private or local infrastructure."""
+
     parsed = urlparse(url)
     if parsed.scheme not in {"http", "https"} or not parsed.hostname:
         raise ValueError("Only public HTTP/HTTPS cited sources can be fetched in this stage.")

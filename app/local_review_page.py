@@ -5,7 +5,7 @@ def render_local_review_page() -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Business Report Verifier</title>
+  <title>ClaimTrace</title>
   <style>
     :root {
       --bg: #f5efe2;
@@ -525,7 +525,7 @@ def render_local_review_page() -> str:
   <main class="shell">
     <section class="hero">
       <span class="eyebrow">Local multi-claim review</span>
-      <h1>Business Report Verifier</h1>
+      <h1>ClaimTrace</h1>
       <p>
         Prepare one report, confirm the cited claims you want to review, and check them against their exact sources.
         Shared sources are fetched once. HTML and text-layer PDFs only; no OCR or source search.
@@ -1495,7 +1495,7 @@ def render_local_review_page() -> str:
         const candidate = candidates.find((item) => item.direction === direction);
         const claimText = candidate
           ? candidate.sentence_text
-          : String(sentence.sentence_text || "").replace(/\[\d+\]/g, "").trim();
+          : String(sentence.sentence_text || "").replace(/\\[\\d+\\]/g, "").trim();
         return [
           "<div class='selection-item'>",
           "  <label>",
@@ -1821,7 +1821,7 @@ def render_local_review_page() -> str:
           ? judgePayload.candidate_passages
           : [];
       const lines = [
-        "# Business Report Verifier Summary",
+        "# ClaimTrace Summary",
         "",
         "## Single Claim Review",
         "",
@@ -1862,7 +1862,7 @@ def render_local_review_page() -> str:
         : null;
       const attentionSources = displayedBatchRecoverySources(payload);
       const lines = [
-        "# Business Report Verifier Summary",
+        "# ClaimTrace Summary",
         "",
         "## Batch Review Result",
         "",

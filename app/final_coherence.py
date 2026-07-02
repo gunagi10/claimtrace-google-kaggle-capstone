@@ -1,3 +1,10 @@
+"""Final report-level coherence packet and runner.
+
+Final coherence is the fan-in step after evidence review and section analysis.
+It receives section digests and unresolved risks, not raw source pages, so it
+cannot silently override upstream evidence verdicts.
+"""
+
 from __future__ import annotations
 
 from app.final_coherence_judge import (
@@ -22,6 +29,8 @@ def build_final_coherence_packet(
     coverage: BatchCoverage,
     section_items: list[SectionAnalysisRunItem],
 ) -> FinalCoherencePacket:
+    """Condense completed section assessments into one report-level packet."""
+
     completed_sections = [item for item in section_items if item.assessment is not None]
     digests = [
         FinalSectionDigest(
@@ -84,6 +93,8 @@ def _build_unresolved_report_risks(
     gate: BatchGateRecommendation,
     section_items: list[SectionAnalysisRunItem],
 ) -> list[str]:
+    """Carry hard evidence warnings forward into the final review."""
+
     risks: list[str] = []
     if gate.contradiction_count > 0:
         risks.append(

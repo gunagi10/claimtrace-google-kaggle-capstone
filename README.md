@@ -34,6 +34,8 @@ The intended users are finance, investor relations, consulting, market intellige
 6. Ask Gemini to judge only the bounded evidence packet, not the whole internet or the whole document.
 7. Run section analysis and final coherence only after the evidence gate is clear enough to continue.
 
+For the detailed retrieval, chunking, and ranking design, see [Retrieval Design](docs/RETRIEVAL_DESIGN.md).
+
 ## Google x Kaggle Course Concepts Applied
 
 ClaimTrace applies ideas from the Google x Kaggle course readings in a practical, scoped way:

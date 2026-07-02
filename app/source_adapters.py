@@ -1,3 +1,10 @@
+"""Source extraction adapters for fetched or uploaded cited sources.
+
+The adapters convert HTML and text-layer PDFs into traceable text blocks. They
+preserve useful source structure where it is reliable, but intentionally return
+explicit extraction failure/OCR states instead of guessing from unreadable files.
+"""
+
 from __future__ import annotations
 
 import re
@@ -44,6 +51,8 @@ class HtmlSourceAdapter(SourceAdapter):
     source_kind = SourceKind.HTML
 
     def extract(self, payload: SourcePayload) -> ExtractedSourceDocument:
+        """Extract heading-aware prose and conservative table rows from HTML."""
+
         html_text = payload.body.decode("utf-8", errors="ignore")
         parser = _HtmlBlockParser()
         parser.feed(html_text)
@@ -98,6 +107,8 @@ class TextPdfSourceAdapter(SourceAdapter):
     source_kind = SourceKind.TEXT_PDF
 
     def extract(self, payload: SourcePayload) -> ExtractedSourceDocument:
+        """Extract text-layer PDF prose plus narrow, layout-obvious table rows."""
+
         try:
             reader = PdfReader(BytesIO(payload.body))
         except Exception as exc:  # pragma: no cover - library error surface

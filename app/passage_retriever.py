@@ -450,6 +450,9 @@ def retrieve_candidate_passages(
         )
         for index, candidate in enumerate(candidates)
     ]
+    # Score first, then adjust for subject specificity. This keeps the core
+    # anchor math simple while letting richer topic-matching passages beat bare
+    # numeric fragments when both describe the same evidence story.
     scored = _apply_identity_and_fragment_adjustments(
         scored,
         claim_identity_terms=_identity_terms(query.claim_text),
@@ -471,6 +474,8 @@ def _select_diverse_passages(
     *,
     max_results: int,
 ) -> list[EvidencePassage]:
+    """Choose a small packet that covers distinct evidence, not duplicates."""
+
     selected: list[ScoredCandidate] = []
     covered: set[str] = set()
     remaining = list(candidates)

@@ -39,7 +39,7 @@ def test_local_review_page_renders_browser_shell() -> None:
     response = client.get("/local/review")
 
     assert response.status_code == 200
-    assert "Business Report Verifier" in response.text
+    assert "ClaimTrace" in response.text
     assert "Review Result" in response.text
     assert "Raw response" in response.text
     assert "Citation direction" in response.text

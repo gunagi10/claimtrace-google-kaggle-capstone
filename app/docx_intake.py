@@ -1,3 +1,10 @@
+"""DOCX intake and citation mapping for the local review flow.
+
+This layer is intentionally deterministic. It turns a Word report into sections,
+references, citation occurrences, and claim-ready sentences before any model is
+called, so the user can inspect the exact claim/source map.
+"""
+
 from __future__ import annotations
 
 import re
@@ -68,6 +75,12 @@ def validate_docx_upload(filename: str, content: bytes) -> None:
 
 
 def parse_docx_bytes(filename: str, content: bytes) -> ParsedDocument:
+    """Parse a supported DOCX into the structured review model.
+
+    The parser keeps enough location data to trace a later evidence verdict back
+    to the original section, paragraph, sentence, citation, and bibliography row.
+    """
+
     validate_docx_upload(filename, content)
 
     with zipfile.ZipFile(BytesIO(content)) as archive:
@@ -342,6 +355,13 @@ def _classify_citation_direction(
     sentence_chunks: list[str],
     citation_sentence_index: int,
 ) -> tuple[CitationDirection, list[CitationDirectionCandidate], int]:
+    """Classify whether a citation attaches backward, forward, or ambiguously.
+
+    When a leading citation could refer to the previous sentence or the sentence
+    that follows it, the safer product behavior is to ask the user instead of
+    silently choosing one direction.
+    """
+
     sentence_text = sentence_chunks[citation_sentence_index]
     substantive_text = _without_citation_markers(sentence_text)
     starts_with_citation = bool(LEADING_CITATIONS_RE.match(sentence_text))

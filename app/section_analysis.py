@@ -1,3 +1,10 @@
+"""Section-level packet building and bounded section analysis orchestration.
+
+Section analysis happens after cited-source checks. It receives compact,
+section-scoped packets built from the report text plus claim outcomes, so the
+section model can reason about narrative quality without re-fetching evidence.
+"""
+
 from __future__ import annotations
 
 import asyncio
@@ -59,6 +66,8 @@ def build_section_packets(
     max_section_words: int | None = None,
     max_subchunk_words: int | None = None,
 ) -> list[SectionPacket]:
+    """Build one bounded, inspectable packet per eligible report section."""
+
     section_word_limit = max_section_words or settings.section_max_words
     subchunk_word_limit = max_subchunk_words or settings.section_subchunk_max_words
     claim_outcomes_by_section: dict[str, list[SectionClaimOutcome]] = {}
@@ -81,6 +90,8 @@ def build_section_packets(
         section_text = _section_text(section)
         word_count = _word_count(section_text)
         is_oversized = word_count > section_word_limit
+        # Oversized sections are summarized through deterministic subchunks
+        # instead of sending the whole section to Gemini.
         subchunks = (
             _build_subchunks(section, max_subchunk_words=subchunk_word_limit)
             if is_oversized
@@ -148,6 +159,8 @@ async def run_section_packets_with_bounded_concurrency(
     packets: list[SectionPacket],
     max_concurrent_workers: int | None = None,
 ) -> SectionRunOutcome:
+    """Run one tool-free section worker per packet with bounded concurrency."""
+
     configured_workers = max_concurrent_workers or settings.section_max_concurrent_workers
     semaphore = asyncio.Semaphore(configured_workers)
     started_at = perf_counter()

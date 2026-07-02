@@ -1,3 +1,11 @@
+"""Support code for the lightweight fixed-fixture evaluation harness.
+
+The eval intentionally wraps the real batch-review route instead of duplicating
+the verifier. It aligns staged DOCX reports to an answer key, caches exact cited
+source snapshots locally, and patches source fetching only at the boundary where
+the production app normally reaches the public web.
+"""
+
 from __future__ import annotations
 
 import hashlib
@@ -95,6 +103,8 @@ def normalize_claim_text(text: str) -> str:
 
 
 def parse_answer_key(path: Path = ANSWER_KEY_PATH) -> list[ReportExpectation]:
+    """Parse the DOCX answer key into report/claim expectations."""
+
     paragraphs = read_docx_paragraphs(path)
     reports: list[ReportExpectation] = []
     current_report_id: int | None = None
@@ -211,6 +221,8 @@ def load_fixed_fixture_cases(
     answer_key_path: Path = ANSWER_KEY_PATH,
     seed_material_dir: Path = SEED_MATERIAL_DIR,
 ) -> list[FixedFixtureCase]:
+    """Align answer-key expectations to the staged DOCX report fixtures."""
+
     expectations = {item.report_id: item for item in parse_answer_key(answer_key_path)}
     report_paths = sorted(seed_material_dir.glob("BRV_Report_*_*.docx"))
     cases: list[FixedFixtureCase] = []
@@ -284,6 +296,8 @@ def refresh_source_fixture_library(
     fixture_dir: Path = SOURCE_FIXTURE_DIR,
     manifest_path: Path = SOURCE_FIXTURE_MANIFEST_PATH,
 ) -> dict[str, dict]:
+    """Fetch one local source snapshot per unique cited URL for replayable evals."""
+
     fixture_dir.mkdir(parents=True, exist_ok=True)
     manifest_entries: dict[str, dict] = {}
     unique_cases: dict[str, FixedFixtureCase] = {}
@@ -377,6 +391,8 @@ def build_local_source_fetch(
     manifest_entries: dict[str, dict],
     fixture_dir: Path = SOURCE_FIXTURE_DIR,
 ):
+    """Return a production-shaped source fetcher backed by local snapshots."""
+
     def _local_fetch(reference: ReferenceEntry, source_id: str) -> SourceFetchOutcome:
         canonical_url = (reference.canonical_url or "").strip()
         entry = manifest_entries.get(canonical_url)
